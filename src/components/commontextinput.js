@@ -1,9 +1,10 @@
 import React from 'react';
 import {Text, TextInput, View} from 'react-native';
+import { getString } from '../data/strings';
+import { COLORS } from '../style/colors';
+import { DEFAULT_FONT } from '../style/fonts';
 
-import {DEFAULT_FONT} from '../style/fonts';
-import {COLORS} from '../style/colors';
-import {getString} from '../data/strings';
+
 
 const CommonTextInput = ({
   text,

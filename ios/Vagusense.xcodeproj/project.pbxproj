@@ -12,7 +12,7 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		63B37EC2284288FF002B1F68 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 63B37EC1284288FF002B1F68 /* main.jsbundle */; };
+		637417E528552FD8003A7C55 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 637417E428552FD8003A7C55 /* main.jsbundle */; };
 		7699B88040F8A987B510C191 /* libPods-Vagusense-VagusenseTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-Vagusense-VagusenseTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -31,6 +31,7 @@
 		00E356EE1AD99517003FC87E /* VagusenseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VagusenseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* VagusenseTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VagusenseTests.m; sourceTree = "<group>"; };
+		02D8F1B3025B4C6396570904 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/@codler/native-base/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* Vagusense.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vagusense.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Vagusense/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = Vagusense/AppDelegate.mm; sourceTree = "<group>"; };
@@ -39,13 +40,31 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Vagusense/main.m; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-Vagusense-VagusenseTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Vagusense-VagusenseTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B4392A12AC88292D35C810B /* Pods-Vagusense.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vagusense.debug.xcconfig"; path = "Target Support Files/Pods-Vagusense/Pods-Vagusense.debug.xcconfig"; sourceTree = "<group>"; };
+		4501EC02FEC1468A901D4FF2 /* Roboto_medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto_medium.ttf; path = "../node_modules/@codler/native-base/Fonts/Roboto_medium.ttf"; sourceTree = "<group>"; };
+		50D18525CEAA43C1A6C0C624 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/@codler/native-base/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
+		552AB06648604F7085AB6A92 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/@codler/native-base/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-Vagusense.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vagusense.release.xcconfig"; path = "Target Support Files/Pods-Vagusense/Pods-Vagusense.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-Vagusense-VagusenseTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vagusense-VagusenseTests.debug.xcconfig"; path = "Target Support Files/Pods-Vagusense-VagusenseTests/Pods-Vagusense-VagusenseTests.debug.xcconfig"; sourceTree = "<group>"; };
+		5B9045429380482E80516169 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/@codler/native-base/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-Vagusense.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Vagusense.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		63B37EC1284288FF002B1F68 /* main.jsbundle */ = {isa = PBXFileReference; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
+		637417E428552FD8003A7C55 /* main.jsbundle */ = {isa = PBXFileReference; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
+		6C5392AC873643B2AAB81E2C /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/@codler/native-base/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
+		6D140B28E4D241AEAACE5E3A /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/@codler/native-base/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
+		77CF14434978479E94B34319 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/@codler/native-base/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Vagusense/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		827082B69798416996FBA3C0 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/@codler/native-base/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-Vagusense-VagusenseTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vagusense-VagusenseTests.release.xcconfig"; path = "Target Support Files/Pods-Vagusense-VagusenseTests/Pods-Vagusense-VagusenseTests.release.xcconfig"; sourceTree = "<group>"; };
+		8B0795920110432DBE77B43D /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/@codler/native-base/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
+		9E6AFA70A9354CFA83D2DE25 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/@codler/native-base/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
+		A16E1157923C4E4CB363095C /* Roboto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto.ttf; path = "../node_modules/@codler/native-base/Fonts/Roboto.ttf"; sourceTree = "<group>"; };
+		A23D580C20954103B6C63682 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/@codler/native-base/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
+		A3600BAF08C54747BC26C6FC /* rubicon-icon-font.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "rubicon-icon-font.ttf"; path = "../node_modules/@codler/native-base/Fonts/rubicon-icon-font.ttf"; sourceTree = "<group>"; };
+		AB603C0088D443EFA579B762 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/@codler/native-base/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
+		AEDFECF3FDAD447A8B1084DD /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/@codler/native-base/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
+		B707D092F99449C595B8CEE2 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/@codler/native-base/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
+		D97560DE24574446A72BBC54 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/@codler/native-base/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		F605F0CA173A4DE6B0843966 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/@codler/native-base/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,9 +113,35 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
-				63B37EC1284288FF002B1F68 /* main.jsbundle */,
+				637417E428552FD8003A7C55 /* main.jsbundle */,
 			);
 			name = Vagusense;
+			sourceTree = "<group>";
+		};
+		2D05D9701290450EBF2E0D95 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8B0795920110432DBE77B43D /* AntDesign.ttf */,
+				AB603C0088D443EFA579B762 /* Entypo.ttf */,
+				6C5392AC873643B2AAB81E2C /* EvilIcons.ttf */,
+				77CF14434978479E94B34319 /* Feather.ttf */,
+				827082B69798416996FBA3C0 /* FontAwesome.ttf */,
+				A23D580C20954103B6C63682 /* FontAwesome5_Brands.ttf */,
+				02D8F1B3025B4C6396570904 /* FontAwesome5_Regular.ttf */,
+				6D140B28E4D241AEAACE5E3A /* FontAwesome5_Solid.ttf */,
+				AEDFECF3FDAD447A8B1084DD /* Fontisto.ttf */,
+				B707D092F99449C595B8CEE2 /* Foundation.ttf */,
+				552AB06648604F7085AB6A92 /* Ionicons.ttf */,
+				9E6AFA70A9354CFA83D2DE25 /* MaterialCommunityIcons.ttf */,
+				F605F0CA173A4DE6B0843966 /* MaterialIcons.ttf */,
+				D97560DE24574446A72BBC54 /* Octicons.ttf */,
+				4501EC02FEC1468A901D4FF2 /* Roboto_medium.ttf */,
+				A16E1157923C4E4CB363095C /* Roboto.ttf */,
+				A3600BAF08C54747BC26C6FC /* rubicon-icon-font.ttf */,
+				50D18525CEAA43C1A6C0C624 /* SimpleLineIcons.ttf */,
+				5B9045429380482E80516169 /* Zocial.ttf */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
@@ -125,6 +170,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				2D05D9701290450EBF2E0D95 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -245,7 +291,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				63B37EC2284288FF002B1F68 /* main.jsbundle in Resources */,
+				637417E528552FD8003A7C55 /* main.jsbundle in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
@@ -488,6 +534,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7P9XYSTF72;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Vagusense/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -514,6 +561,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7P9XYSTF72;
 				INFOPLIST_FILE = Vagusense/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

@@ -6,7 +6,6 @@ import { COLORS } from '../style/colors';
 
 const SurveyButton = ({
   text,
-  id,
   onPress,
   buttonMarginTop = 16,
   buttonMarginBottom = 0,
@@ -14,7 +13,6 @@ const SurveyButton = ({
   buttonHeight = 50,
   buttonRadius = 24,
   surveyStyle,
-  isSelected = false,
   backgroundColor = 'white'
 }) => {
   const wrapperStyle = {
@@ -44,7 +42,6 @@ const SurveyButton = ({
     fontFamily: DEFAULT_FONT,
   };
 
-  const buttonID = id;
 
   return (
     <TouchableOpacity
