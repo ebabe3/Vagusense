@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Image, Text, StyleSheet, Dimensions, BackHandler } from 'react-native';
+import { View, Image, Text, StyleSheet, Dimensions } from 'react-native';
 
 import { Container, Content, Icon } from 'native-base';
 
