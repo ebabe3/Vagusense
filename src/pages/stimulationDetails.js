@@ -76,9 +76,6 @@ const stimulationDetails = ({ navigation }) => {
             });
     };
 
-
-    const data = [{ value: 50 }, { value: 80 }, { value: 90 }, { value: 70 }]
-
     return (
         <Container>
             <CommonHeader

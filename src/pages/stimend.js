@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 
-import { Container, Content } from 'native-base';
+import { Container } from 'native-base';
 
 import CommonButton from '../components/commonbutton.js';
 import CommonHeader from '../components/commonheader.js';
