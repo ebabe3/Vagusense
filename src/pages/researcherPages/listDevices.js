@@ -1,16 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { Text, SectionList, TextInput, View, StyleSheet } from 'react-native';
+import React from 'react';
+import { Text, SectionList, View, StyleSheet } from 'react-native';
 
-import { Container, Icon, Separator, ListItem, Button, Left, Right } from 'native-base';
+import { Container, ListItem, Left } from 'native-base';
 
 import CommonHeader from '../components/commonheader.js';
 import CommonButton from '../components/commonbutton.js';
 
 import { COLORS } from '../style/colors';
 import { DEFAULT_FONT } from '../style/fonts';
-import { getString } from '../data/strings';
 import { CONFIG } from '../data/config';
-import MyBleManager from '../../components/ble.js';
 
 const ListDevices = ({ navigation, route }) => {
 
