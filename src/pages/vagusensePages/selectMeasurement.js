@@ -1,65 +1,62 @@
-import React, { useState, useEffect } from 'react';
-import { Text, SectionList, TextInput, View, StyleSheet } from 'react-native';
-
-import { Container, Icon, Separator, ListItem, Button, Left, Right } from 'native-base';
-
-import CommonHeader from '../../components/commonheader.js';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet } from 'react-native';
 import CommonButton from '../../components/commonbutton.js';
-
+import { Container } from 'native-base';
 import { COLORS } from '../../style/colors';
 import { DEFAULT_FONT } from '../../style/fonts';
-import { CONFIG } from '../../data/config.js';
 
-const ListDevices = ({ navigation, route }) => {
+const SelectMeasurement = ({ navigation, route }) => {
 
-    const Item = ({ name }) => (
-        <ListItem
-            onPress={() => {
-                navigation.navigate('BleConnectSelectedDevice', {
-                    selectedDeviceName: name
-                });
-            }}>
-            <Left>
-                <Text style={styles.itemTextStyle}>{name}</Text>
-            </Left>
-        </ListItem>
-    );
 
     return (
         <Container>
-            <CommonHeader
-                text={"List of Devices"}
-                isBackActive={false}
-                isSettingsActive={false}
-                isEditText={false}
-            />
-            <SectionList
-                sections={CONFIG.deviceList}
-                keyExtractor={(item, index) => item + index}
-                tintColor="#F8852D"
-                onEndReachedThreshold={0.5}
-                renderItem={({ item }) =>
-                    <View>
-                        <Item name={item.name} />
-                    </View>
-                }
-            />
-            <View style={styles.textAndButtonView}>
-                <Text style={styles.startStimText}>{"To connect a device, please tap on the device"}</Text>
+            <View
+                style={{
+                    display: 'flex',
+                    height: '100%',
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                }}
+            >
                 <CommonButton
-                    text={"Search Again"}
+                    text={"Normal Measurement"}
                     onPress={() => {
-                        navigation.navigate('BleSearchDevices');
+                        navigation.navigate('NormalMeasurement', {
+                            selectedDeviceName: route.params.selectedDeviceName
+                        });
                     }}
                     buttonColor={COLORS.buttonBlue}
-                    buttonWidth={'80%'}
-                    buttonMarginTop={16}
-                    buttonMarginBottom={28}
+                    buttonWidth={'50%'}
+                    buttonMarginTop={54}
                 />
-            </View>
-        </Container>
-    );
-};
+
+                <CommonButton
+                    text={"Only GSR"}
+                    onPress={() => {
+                        navigation.navigate('OnlyGSR', {
+                            selectedDeviceName: route.params.selectedDeviceName
+                        });
+                    }}
+                    buttonColor={COLORS.buttonBlue}
+                    buttonWidth={'50%'}
+                    buttonMarginTop={54}
+                />
+
+                <CommonButton
+                    text={"Live Measurement"}
+                    onPress={() => {
+                        navigation.navigate('LiveMeasurement', {
+                            selectedDeviceName: route.params.selectedDeviceName
+                        });
+                    }}
+                    buttonColor={COLORS.buttonBlue}
+                    buttonWidth={'50%'}
+                    buttonMarginTop={54}
+                />
+            </View >
+        </Container >
+    )
+}
 
 const styles = StyleSheet.create({
     content: {},
@@ -133,4 +130,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default ListDevices;
+export default SelectMeasurement;

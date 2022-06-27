@@ -24,7 +24,8 @@
     "react": "17.0.2",
     "react-native": "^0.68.2",
     "react-native-android-location-enabler": "^1.2.2",
-    "react-native-ble-plx": "^2.0.3",
+    "react-native-awesome-alerts": "^2.0.0",
+    "react-native-ble-plx": "^2.0.2",
     "react-native-bluetooth-status": "^1.5.1",
     "react-native-countdown-circle-timer": "^3.0.9",
     "react-native-dropdown-picker": "^5.4.2",
@@ -38,8 +39,9 @@
     "react-native-screens": "^3.13.1",
     "react-native-splash-screen": "^3.3.0",
     "react-native-svg": "^12.3.0",
+    "react-native-svg-charts": "^5.4.0",
     "react-native-swipe-gestures": "^1.0.5",
-    "react-native-vector-icons": "^9.1.0",
+    "react-native-vector-icons": "^9.2.0",
     "react-router-dom": "^6.3.0"
   },
   "devDependencies": {

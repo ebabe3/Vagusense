@@ -13,14 +13,14 @@ import { Container, Content } from 'native-base';
 import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
 import { BluetoothStatus } from 'react-native-bluetooth-status';
 
-import MyBleManager from '../components/ble.js';
-import CommonButton from '../components/commonbutton.js';
-import CommonHeader from '../components/commonheader.js';
+import MyBleManager from '../../components/ble.js';
+import CommonButton from '../../components/commonbutton.js';
+import CommonHeader from '../../components/commonheader.js';
 
-import { getString } from '../data/strings';
-import { COLORS } from '../style/colors';
-import { DEFAULT_FONT } from '../style/fonts';
-import { CONFIG } from '../data/config';
+import { getString } from '../../data/strings';
+import { COLORS } from '../../style/colors';
+import { DEFAULT_FONT } from '../../style/fonts';
+import { CONFIG } from '../../data/config';
 import FastImage from 'react-native-fast-image';
 
 import AwesomeAlert from 'react-native-awesome-alerts';
@@ -94,7 +94,7 @@ const BleConnectSelectedDevice = ({ navigation, route }) => {
                 waitConnection();
             }, bleConnCheckInterval);
         } else {
-            navigation.navigate('BleConnected', {
+            navigation.navigate('SelectMeasurement', {
                 selectedDeviceName: route.params.selectedDeviceName
             });
         }
@@ -105,7 +105,7 @@ const BleConnectSelectedDevice = ({ navigation, route }) => {
             <View style={styles.imageView}>
                 <FastImage
                     style={styles.gifStyle}
-                    source={require('../images/bluetooth.gif')}
+                    source={require('../../images/bluetooth.gif')}
                     resizeMode={FastImage.resizeMode.center}
                 />
             </View>
