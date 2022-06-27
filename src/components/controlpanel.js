@@ -11,10 +11,8 @@ const ControlPanel = ({
   isStimPaused,
   onPressStart,
   onPressStop,
-  remainingTime,
   leftCurrent,
   rightCurrent,
-  isAdmin,
 }) => {
   const circleDiameter = 80;
 
@@ -81,20 +79,6 @@ const ControlPanel = ({
     color: COLORS.lightTextColor,
   };
 
-  const remTimeTitle = {
-    textAlign: 'center',
-    fontFamily: DEFAULT_FONT,
-    fontSize: 15,
-    color: COLORS.darkerTextColor,
-  };
-
-  const remTimeText = {
-    textAlign: 'center',
-    fontFamily: DEFAULT_FONT,
-    fontSize: 17,
-    color: COLORS.lightTextColor,
-  };
-
   const currentText = {
     textAlign: 'center',
     fontFamily: DEFAULT_FONT,
@@ -115,26 +99,6 @@ const ControlPanel = ({
     borderRadius: circleDiameter / 2,
     justifyContent: 'center',
     alignItems: 'center',
-  };
-
-  const getRemainingTime = () => {
-    if (remainingTime > 3600) {
-      return (
-        String(Math.floor(remainingTime / 3600)) +
-        ' h ' +
-        String(Math.floor((remainingTime % 3600) / 60)) +
-        ' m ' +
-        String(remainingTime % 60) +
-        ' s'
-      );
-    } else {
-      return (
-        String(Math.floor(remainingTime / 60)) +
-        ' m ' +
-        String(remainingTime % 60) +
-        ' s'
-      );
-    }
   };
 
   return (

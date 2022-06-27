@@ -15,7 +15,7 @@ import CommonTextInput from '../components/commontextinput.js';
 
 
 
-const stimulationDetails = ({ navigation }) => {
+const StimulationDetails = ({ navigation }) => {
 
     const [oldNotes, setOldNotes] = useState("");
     const [notes, setNotes] = useState("");
@@ -203,4 +203,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default stimulationDetails;
+export default StimulationDetails;
