@@ -17,8 +17,6 @@ import { getString } from '../data/strings';
 import { COLORS } from '../style/colors';
 import { CONFIG } from '../data/config';
 
-import Analytics from 'appcenter-analytics';
-
 
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
 
