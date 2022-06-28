@@ -54,18 +54,33 @@ const BleSearchDevices = ({ navigation, route }) => {
         console.log("Use Effect");
         if (Platform.OS === 'android') {
             PermissionsAndroid.request(
-                PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+                PermissionsAndroid.PERMISSIONS.BLUETOOTH_CONNECT
             ).then((granted) => {
-                RNAndroidLocationEnabler.promptForEnableLocationIfNeeded({
-                    interval: 10000,
-                    fastInterval: 5000,
-                })
-                    .then(() => {
-                        initBluetooth();
-                    })
-                    .catch((error) => {
-                        console.info(error);
+                console.log("BLUETOOTH_CONNECT")
+                PermissionsAndroid.request(
+                    PermissionsAndroid.PERMISSIONS.BLUETOOTH_SCAN
+                ).then((granted) => {
+                    console.log("BLUETOOTH_SCAN")
+                    PermissionsAndroid.request(
+                        PermissionsAndroid.PERMISSIONS.BLUETOOTH_ADVERTISE
+                    ).then((granted) => {
+                        console.log("BLUETOOTH_ADVERTISE")
+                        
+                        PermissionsAndroid.request(
+                            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+                        ).then((granted) => {
+            
+                            console.log("ACCESS_FINE_LOCATION")
+            
+                            initBluetooth();
+                        });
+                        
                     });
+    
+                    
+                });
+
+                
             });
         } else {
             initBluetooth();

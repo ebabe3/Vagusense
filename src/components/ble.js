@@ -187,7 +187,7 @@ export default class MyBleManager {
     this.isSearching = true;
     this.manager.startDeviceScan(null, null, (error, device) => {
       if (error) {
-        console.info('Scan Error: ' + error);
+        console.log('Scan Error: ' + JSON.stringify(error))
         return;
       }
       if (device.name && device.name.includes('Vagustim') && !CONFIG.deviceList[0]["data"].find(element => element.name === device.name)) {

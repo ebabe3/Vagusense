@@ -34,6 +34,9 @@ const BleSearch = ({ navigation, route }) => {
   useEffect(() => {
     if (Platform.OS === 'android') {
       PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.BLUETOOTH_CONNECT,
+        PermissionsAndroid.PERMISSIONS.BLUETOOTH_SCAN,
+        PermissionsAndroid.PERMISSIONS.BLUETOOTH_ADVERTISE,
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
       ).then((granted) => {
         RNAndroidLocationEnabler.promptForEnableLocationIfNeeded({
