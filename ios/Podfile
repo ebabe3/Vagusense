@@ -21,6 +21,8 @@ target 'Vagusense' do
 
   pod 'react-native-ble-plx', :path => '../node_modules/react-native-ble-plx'
 
+  pod 'RNFS', :path => '../node_modules/react-native-fs'
+
   target 'VagusenseTests' do
     inherit! :complete
     # Pods for testing

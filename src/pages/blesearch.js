@@ -75,8 +75,7 @@ const BleSearch = ({ navigation, route }) => {
   };
 
   const connectFirst = () => {
-    //bleInstance.searchDevices();
-    bleInstance.connectSelectedDevice("Vagustim_30:83:98:EB:C1:1C", 2);
+    bleInstance.searchDevices();
     waitConnection();
   };
 
@@ -86,7 +85,6 @@ const BleSearch = ({ navigation, route }) => {
         waitConnection();
       }, bleConnCheckInterval);
     } else {
-      navigation.navigate('BleConnected');
     }
   };
 

@@ -150,12 +150,10 @@ const UserPage = ({ navigation }) => {
 
 
   const SeparatorHeader = ({ title }) => (
-    <Separator bordered>
+    <Separator>
       <Text style={styles.separatorStyle}>{title}</Text>
     </Separator>
   );
-
-
 
   return (
     <Container>

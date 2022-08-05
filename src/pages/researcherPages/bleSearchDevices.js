@@ -9,8 +9,6 @@ import {
 } from 'react-native';
 
 import { Container, Content } from 'native-base';
-
-import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
 import { BluetoothStatus } from 'react-native-bluetooth-status';
 
 import CommonButton from '../../components/commonbutton.js';
@@ -51,7 +49,6 @@ const BleSearchDevices = ({ navigation, route }) => {
     }, []);
 
     useEffect(() => {
-        console.log("Use Effect");
         if (Platform.OS === 'android') {
             PermissionsAndroid.request(
                 PermissionsAndroid.PERMISSIONS.BLUETOOTH_CONNECT
@@ -76,11 +73,8 @@ const BleSearchDevices = ({ navigation, route }) => {
                         });
                         
                     });
-    
                     
                 });
-
-                
             });
         } else {
             initBluetooth();
@@ -112,9 +106,7 @@ const BleSearchDevices = ({ navigation, route }) => {
     };
 
     const waitBleInstanceSearching = () => {
-        console.info(bleInstance.isSearchedForResearchers);
         if (bleInstance.isSearchedForResearchers) {
-            console.log("Finished");
             navigation.navigate('ListDevices');
         } else {
             setTimeout(() => {

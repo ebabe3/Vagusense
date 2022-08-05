@@ -1,11 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, AppState, TouchableOpacity, Text, Alert } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  StyleSheet,
+  AppState,
+  TouchableOpacity,
+  Text,
+  Alert,
+} from 'react-native';
 
 import GestureRecognizer from 'react-native-swipe-gestures';
 
-import { Container, Content, Icon } from 'native-base';
+import {Container, Content, Icon} from 'native-base';
 
-import { Buffer } from 'buffer';
+import {Buffer} from 'buffer';
 
 import MyBleManager from '../components/ble.js';
 import CommonHeader from '../components/commonheader.js';
@@ -13,14 +20,13 @@ import HeadphoneSelect from '../components/headphoneselect.js';
 import ControlPanel from '../components/controlpanel.js';
 import HeadphoneControl from '../components/headphonecontrol.js';
 
-import { getString } from '../data/strings';
-import { COLORS } from '../style/colors';
-import { CONFIG } from '../data/config';
+import {getString} from '../data/strings';
+import {COLORS} from '../style/colors';
+import {CONFIG} from '../data/config';
 
+import {CountdownCircleTimer} from 'react-native-countdown-circle-timer';
 
-import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
-
-const BleControl = ({ navigation, route }) => {
+const BleControl = ({navigation, route}) => {
   const [gotSuggest, setGotSuggest] = useState(false);
 
   const [suggestFreq, setSuggestFreq] = useState(0);
@@ -96,7 +102,7 @@ const BleControl = ({ navigation, route }) => {
   //Handle text switches
   useEffect(() => {
     const textTimer = setTimeout(() => {
-      setBleTextIndex((prevIndex) => (prevIndex + 1) % 3);
+      setBleTextIndex(prevIndex => (prevIndex + 1) % 3);
       setTextUpdateTime(textUpdateTime + 1);
     }, textUpdateTimeout);
     return () => {
@@ -119,10 +125,10 @@ const BleControl = ({ navigation, route }) => {
           bleInstance.CONTROL_SERVICE_UUID,
           bleInstance.CONTROL_CHAR0_UUID,
         )
-        .then((response) => {
+        .then(response => {
           console.info('Updated intensity to: ' + confString);
         })
-        .catch((error) => {
+        .catch(error => {
           console.info('Updated intensity error: ' + error);
         });
     }
@@ -137,16 +143,19 @@ const BleControl = ({ navigation, route }) => {
 
   const getParamSuggest = () => {
     console.info('sugg');
-    fetch(CONFIG.baseServer + 'api/2.0/suggests/getMySuggest/' + CONFIG.patientId, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        Authorization: 'Bearer ' + CONFIG.token,
-        'Content-Type': 'application/json',
+    fetch(
+      CONFIG.baseServer + 'api/2.0/suggests/getMySuggest/' + CONFIG.patientId,
+      {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          Authorization: 'Bearer ' + CONFIG.token,
+          'Content-Type': 'application/json',
+        },
       },
-    })
-      .then((response) => response.json())
-      .then((responseData) => {
+    )
+      .then(response => response.json())
+      .then(responseData => {
         console.info('suggest ' + JSON.stringify(responseData));
         if (responseData['parameter']) {
           console.info('Got suggests');
@@ -161,12 +170,12 @@ const BleControl = ({ navigation, route }) => {
           console.info('No suggest found');
         }
       })
-      .catch((error) => {
+      .catch(error => {
         console.info(error);
       });
   };
 
-  const handleAppStateChange = (nextAppState) => {
+  const handleAppStateChange = nextAppState => {
     if (appState.match(/inactive|background/) && nextAppState === 'active') {
       if (bleInstance.selectedDevice === null) {
         showDCGoBack();
@@ -181,7 +190,7 @@ const BleControl = ({ navigation, route }) => {
     Alert.alert(getString('bleDc'));
     navigation.reset({
       index: 0,
-      routes: [{ name: 'BleSearch' }],
+      routes: [{name: 'BleSearch'}],
     });
   };
 
@@ -234,8 +243,6 @@ const BleControl = ({ navigation, route }) => {
         bleInstance.CONTROL_CHAR1_UUID,
       );
 
-      console.log(route.params.selectedDeviceName);
-
       //Monitor current and voltage data
       bleInstance.connectedDevice.monitorCharacteristicForService(
         bleInstance.STATUS_SERVICE_UUID,
@@ -247,117 +254,62 @@ const BleControl = ({ navigation, route }) => {
               'base64',
             ).toString();
 
-            if (bleInstance.connectedDevice.localName === route.params.selectedDeviceName) {
-              if (ppgValue.length < 750) {
-                let delimIndex = currentVal.indexOf('_');
+            if (ppgValue.length < 750) {
+              let delimIndex = currentVal.indexOf('_');
 
-                let ppgCurrent = parseInt(currentVal.substr(0, delimIndex));
-                ppgValue.push(ppgCurrent);
-                setCurrentPpg(ppgCurrent);
+              let ppgCurrent = parseInt(currentVal.substr(0, delimIndex));
+              ppgValue.push(ppgCurrent);
+              setCurrentPpg(ppgCurrent);
 
-                currentVal = currentVal.substr(delimIndex + 1);
-                delimIndex = currentVal.indexOf('_');
+              currentVal = currentVal.substr(delimIndex + 1);
+              delimIndex = currentVal.indexOf('_');
 
-                let skinResponseCurrent = parseInt(currentVal.substr(1, delimIndex));
-                skinResponseValue.push(skinResponseCurrent);
-                setCurrentSkinResponse(skinResponseCurrent);
+              let skinResponseCurrent = parseInt(
+                currentVal.substr(1, delimIndex),
+              );
+              skinResponseValue.push(skinResponseCurrent);
+              setCurrentSkinResponse(skinResponseCurrent);
 
-                currentVal = currentVal.substr(delimIndex + 1);
-                delimIndex = currentVal.indexOf('_');
+              currentVal = currentVal.substr(delimIndex + 1);
+              delimIndex = currentVal.indexOf('_');
 
-                /* console.info(
+              /* console.info(
                    'PPG Current: ' + ppgCurrent,
                    ' \t SkinResponse Current : ' + skinResponseCurrent,
                    ' \t current Val : ' + ppgValue.length,
                  );*/
-              }
-              else {
-                if (ppgValue.length === 750) {
-                  ppgValue.push(0);
-                  fetch(CONFIG.baseServer + 'api/ppgs/', {
-                    method: 'POST',
-                    headers: {
-                      Accept: 'application/json',
-                      Authorization: 'Bearer ' + CONFIG.token,
-                      'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                      stimulationId: CONFIG.stimulationId,
-                      ppg: ppgValue,
-                      skinResponse: skinResponseValue,
-                      isBefore: CONFIG.isBefore
-                    }),
-                  })
-                    .then((response) => response.json())
-                    .then((responseData) => {
-                      console.info(JSON.stringify(responseData, null, 2));
-                      if (responseData.message === 'PPG Added Successfully') {
-                        console.info("PPG Added Successfully");
-                        Alert.alert("Nabız verisi alındı");
-                      } else {
-                        Alert.alert(getString('unknownErrorOccured'));
-                      }
-                    })
-                    .catch((error) => {
-                      setRequestActive(false);
-                      Alert.alert(getString('checkNetwork'));
-                    });
-
-                }
-
-              }
-
             } else {
-              let delimIndex = currentVal.indexOf('_');
-
-              let leftCurrent = currentVal.substr(0, delimIndex);
-              currentVal = currentVal.substr(delimIndex + 1);
-              delimIndex = currentVal.indexOf('_');
-
-              let rightCurrent = currentVal.substr(0, delimIndex);
-              currentVal = currentVal.substr(delimIndex + 1);
-              delimIndex = currentVal.indexOf('_');
-
-              let voltageFeedback = currentVal.substr(0, delimIndex);
-              currentVal = currentVal.substr(delimIndex + 1);
-              delimIndex = currentVal.indexOf('_');
-
-              let onOffStatus = currentVal.substr(0, delimIndex);
-              let timeLeft = Math.ceil(
-                parseInt(currentVal.substr(delimIndex + 1), 10),
-              );
-
-              let lConnected =
-                parseInt(leftCurrent, 10) >= headphoneCurrentThreshold ||
-                onOffStatus === 'off' ||
-                onOffStatus === 'idle';
-
-              let rConnected =
-                parseInt(rightCurrent, 10) >= headphoneCurrentThreshold ||
-                onOffStatus === 'off' ||
-                onOffStatus === 'idle';
-
-
-              setStimOffTime(onOffStatus === 'off');
-              setHeadLConnected(lConnected);
-              setHeadRConnected(rConnected);
-              setRemDuration(timeLeft);
-
-              leftCurrent = (leftCurrent / 1000).toFixed(2);
-              rightCurrent = (rightCurrent / 1000).toFixed(2);
-
-              setLeftCurrentMA(leftCurrent);
-              setRightCurrentMA(rightCurrent);
-
-              /*console.info(
-                'Headphone currents: ' + leftCurrent,
-                ' mA, ',
-                rightCurrent,
-                ' mA\t Voltage FB: ',
-                voltageFeedback,
-                '\tStatus: ' + onOffStatus,
-                '\tTime Left: ' + timeLeft,
-              );*/
+              if (ppgValue.length === 750) {
+                ppgValue.push(0);
+                fetch(CONFIG.baseServer + 'api/ppgs/', {
+                  method: 'POST',
+                  headers: {
+                    Accept: 'application/json',
+                    Authorization: 'Bearer ' + CONFIG.token,
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                    stimulationId: CONFIG.stimulationId,
+                    ppg: ppgValue,
+                    skinResponse: skinResponseValue,
+                    isBefore: CONFIG.isBefore,
+                  }),
+                })
+                  .then(response => response.json())
+                  .then(responseData => {
+                    console.info(JSON.stringify(responseData, null, 2));
+                    if (responseData.message === 'PPG Added Successfully') {
+                      console.info('PPG Added Successfully');
+                      Alert.alert('Nabız verisi alındı');
+                    } else {
+                      Alert.alert(getString('unknownErrorOccured'));
+                    }
+                  })
+                  .catch(error => {
+                    setRequestActive(false);
+                    Alert.alert(getString('checkNetwork'));
+                  });
+              }
             }
           }
         },
@@ -374,8 +326,7 @@ const BleControl = ({ navigation, route }) => {
           bleInstance.CONTROL_CHAR0_UUID,
           bleInstance.CONTROL_CHAR0_UUID,
         )
-        .then((characteristic) => {
-
+        .then(characteristic => {
           let stateVal = Buffer.from(characteristic.value, 'base64').toString();
           console.info('Ble Control - Read config: ' + stateVal);
 
@@ -437,9 +388,8 @@ const BleControl = ({ navigation, route }) => {
           rightProgressEmbedded = parseInt(rightProgStr, 10) / 10;
 
           readDeviceState();
-
         })
-        .catch((error) => {
+        .catch(error => {
           console.info('Read conf error: ' + error);
 
           setTimeout(() => {
@@ -457,7 +407,7 @@ const BleControl = ({ navigation, route }) => {
           bleInstance.CONTROL_CHAR1_UUID,
           bleInstance.CONTROL_CHAR1_UUID,
         )
-        .then((characteristic) => {
+        .then(characteristic => {
           let stateVal = Buffer.from(characteristic.value, 'base64').toString();
           console.info('Read state: ' + stateVal);
 
@@ -492,7 +442,7 @@ const BleControl = ({ navigation, route }) => {
 
           readDeviceVersion();
         })
-        .catch((error) => {
+        .catch(error => {
           console.info('Read dev state error: ' + error);
 
           setTimeout(() => {
@@ -510,7 +460,7 @@ const BleControl = ({ navigation, route }) => {
           bleInstance.STATUS_CHAR0_UUID,
           bleInstance.STATUS_CHAR0_UUID,
         )
-        .then((characteristic) => {
+        .then(characteristic => {
           let stateVal = Buffer.from(characteristic.value, 'base64').toString();
 
           let delimIndex = stateVal.indexOf('_');
@@ -528,7 +478,7 @@ const BleControl = ({ navigation, route }) => {
 
           sendDeviceInfo();
         })
-        .catch((error) => {
+        .catch(error => {
           console.info('Err Device version: ' + error);
 
           setTimeout(() => {
@@ -551,7 +501,7 @@ const BleControl = ({ navigation, route }) => {
         currentVersion: CONFIG.embeddedVersion,
       }),
     })
-      .then((response) => {
+      .then(response => {
         if (response.status === 426) {
           console.info('Update needed');
           if (!CONFIG.skipUpdate) {
@@ -561,15 +511,15 @@ const BleControl = ({ navigation, route }) => {
           console.info('No update');
         }
       })
-      .catch((error) => {
+      .catch(error => {
         console.info(error);
       });
   };
 
   const connectAnalytics = async () => {
     const enabled = await Analytics.isEnabled();
-    console.info("Analytics Enabled : " + enabled);
-  }
+    console.info('Analytics Enabled : ' + enabled);
+  };
 
   const stimFinished = async () => {
     console.info('stim finished');
@@ -606,20 +556,20 @@ const BleControl = ({ navigation, route }) => {
         Accept: 'application/json',
         Authorization: 'Bearer ' + CONFIG.token,
         'Content-Type': 'application/json',
+      },
+    }).then(response => {
+      if (response.status == 200) {
+        console.info('Suggest done successfully');
+      } else {
+        console.info('Suggest done failed');
       }
-    })
-      .then((response) => {
-        if (response.status == 200) {
-          console.info("Suggest done successfully")
-        } else {
-          console.info("Suggest done failed")
-        }
-      })
-  }
+    });
+  };
 
-
-  const sendLog = (logType) => {
-    let curExactDuration = gotSuggest ? (suggestTotalDur - remDuration) : (devTotalDur - remDuration);
+  const sendLog = logType => {
+    let curExactDuration = gotSuggest
+      ? suggestTotalDur - remDuration
+      : devTotalDur - remDuration;
     if (curExactDuration < 0) {
       curExactDuration = 0;
     }
@@ -638,7 +588,7 @@ const BleControl = ({ navigation, route }) => {
         exactDuration: curExactDuration,
         intensityLimit: leftProgress,
         frequency: gotSuggest ? suggestFreq : devFreq,
-        offDuration: gotSuggest ? suggestOffDur : (60 - devOnDur),
+        offDuration: gotSuggest ? suggestOffDur : 60 - devOnDur,
         onDuration: gotSuggest ? suggestOnDur : devOnDur,
         pulseWidth: gotSuggest ? suggestPulse : devPulse,
         deviceId: CONFIG.embeddedMAC,
@@ -647,16 +597,16 @@ const BleControl = ({ navigation, route }) => {
         stimulationId: CONFIG.stimulationId,
       }),
     })
-      .then((response) => response.json())
-      .then(async (responseData) => {
+      .then(response => response.json())
+      .then(async responseData => {
         console.info(JSON.stringify(responseData, null, 2));
       })
-      .catch((error) => {
+      .catch(error => {
         console.info(error);
       });
   };
 
-  const getConfigString = (onlyIntensity) => {
+  const getConfigString = onlyIntensity => {
     let confString =
       bleInstance.leftIntensityChar +
       String(leftProgress * 10) +
@@ -670,7 +620,8 @@ const BleControl = ({ navigation, route }) => {
       confString += bleInstance.frequencyChar + String(suggestFreq) + ';';
       confString += bleInstance.durOnChar + String(suggestOnDur) + ';';
       confString += bleInstance.durOffChar + String(suggestOffDur) + ';';
-      confString += bleInstance.totalDurationChar + String(suggestTotalDur) + ';';
+      confString +=
+        bleInstance.totalDurationChar + String(suggestTotalDur) + ';';
     }
 
     confString += '+' + confString.length;
@@ -686,7 +637,7 @@ const BleControl = ({ navigation, route }) => {
 
       if (gotSuggest && !CONFIG.adminUpdatedSettings) {
         connectAnalytics();
-        Analytics.trackEvent("Stim started by : " + CONFIG.userMail);
+        Analytics.trackEvent('Stim started by : ' + CONFIG.userMail);
         console.info('Got suggest, sending params');
         configString = getConfigString(false);
       } else {
@@ -701,7 +652,7 @@ const BleControl = ({ navigation, route }) => {
           bleInstance.CONTROL_SERVICE_UUID,
           bleInstance.CONTROL_CHAR0_UUID,
         )
-        .then((response) => {
+        .then(response => {
           console.info('Sent config successfully: ' + configString);
 
           //Start stim
@@ -711,7 +662,7 @@ const BleControl = ({ navigation, route }) => {
               bleInstance.CONTROL_SERVICE_UUID,
               bleInstance.CONTROL_CHAR1_UUID,
             )
-            .then((startStimResponse) => {
+            .then(startStimResponse => {
               console.info('Started stim successfully');
               CONFIG.stimInProgress = true;
               isFinishMessageSent = false;
@@ -720,11 +671,11 @@ const BleControl = ({ navigation, route }) => {
               setStimPaused(false);
               sendLog('start');
             })
-            .catch((error) => {
+            .catch(error => {
               console.info('Stim start error: ' + error);
             });
         })
-        .catch((error) => {
+        .catch(error => {
           console.info('Send config error: ' + error);
           Alert.alert(getString('startError'));
         });
@@ -740,7 +691,7 @@ const BleControl = ({ navigation, route }) => {
             bleInstance.CONTROL_SERVICE_UUID,
             bleInstance.CONTROL_CHAR1_UUID,
           )
-          .then((response) => {
+          .then(response => {
             setHeadLConnected(true);
             setHeadRConnected(true);
             setStimStarted(false);
@@ -750,7 +701,7 @@ const BleControl = ({ navigation, route }) => {
             CONFIG.stimInProgress = false;
             sendLog('stop');
           })
-          .catch((error) => {
+          .catch(error => {
             console.info('Stim stop error: ' + error);
           });
       } else {
@@ -760,13 +711,13 @@ const BleControl = ({ navigation, route }) => {
             bleInstance.CONTROL_SERVICE_UUID,
             bleInstance.CONTROL_CHAR1_UUID,
           )
-          .then((response) => {
+          .then(response => {
             setHeadLConnected(true);
             setHeadRConnected(true);
             setStimPaused(true);
             sendLog('pause');
           })
-          .catch((error) => {
+          .catch(error => {
             console.info('Stim pause error: ' + error);
           });
       }
@@ -776,11 +727,11 @@ const BleControl = ({ navigation, route }) => {
   const pressedMinus = () => {
     if (headphoneLSelected) {
       if (leftProgress > 0) {
-        setLeftProgress((prev) => prev - 1);
+        setLeftProgress(prev => prev - 1);
       }
     } else {
       if (rightProgress > 0) {
-        setRightProgress((prev) => prev - 1);
+        setRightProgress(prev => prev - 1);
       }
     }
   };
@@ -788,24 +739,24 @@ const BleControl = ({ navigation, route }) => {
   const pressedPlus = () => {
     if (headphoneLSelected) {
       if (leftProgress < intensityProgressMaxValue) {
-        setLeftProgress((prev) => prev + 1);
+        setLeftProgress(prev => prev + 1);
       }
     } else {
       if (rightProgress < intensityProgressMaxValue) {
-        setRightProgress((prev) => prev + 1);
+        setRightProgress(prev => prev + 1);
       }
     }
   };
 
   const onSwipeLeft = () => {
     if (stimStarted && bleTextIndex < 2) {
-      setBleTextIndex((prevIndex) => (prevIndex + 1));
+      setBleTextIndex(prevIndex => prevIndex + 1);
     }
   };
 
   const onSwipeRight = () => {
     if (stimStarted && bleTextIndex > 0) {
-      setBleTextIndex((prevIndex) => (prevIndex - 1));
+      setBleTextIndex(prevIndex => prevIndex - 1);
     }
   };
 
@@ -828,7 +779,7 @@ const BleControl = ({ navigation, route }) => {
     <Container>
       <CommonHeader
         text={getString('deviceControl')}
-        isBackActive={!CONFIG.userRole.includes("ROLE_RESEARCHER")}
+        isBackActive={!CONFIG.userRole.includes('ROLE_RESEARCHER')}
         onPressBack={() => {
           navigation.navigate('BleConnected');
         }}
@@ -839,22 +790,24 @@ const BleControl = ({ navigation, route }) => {
       />
       <Content contentContainerStyle={styles.content}>
         <View style={styles.iconView}>
-          {CONFIG.userRole.includes("ROLE_RESEARCHER") ?
-            <TouchableOpacity onPress={() => {
-              navigation.navigate('BleSearchDevices');
-            }}>
+          {CONFIG.userRole.includes('ROLE_RESEARCHER') ? (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('BleSearchDevices');
+              }}>
               <Icon
                 style={styles.bluetoothIconStyle}
                 type="MaterialCommunityIcons"
                 name={'bluetooth-connect'}
               />
             </TouchableOpacity>
-            :
+          ) : (
             <Icon
               style={styles.bluetoothIconStyle}
               type="MaterialCommunityIcons"
               name={'bluetooth-connect'}
-            />}
+            />
+          )}
           <Icon
             style={styles.batIconStyle}
             type="FontAwesome"
@@ -865,16 +818,14 @@ const BleControl = ({ navigation, route }) => {
           onSwipeLeft={() => onSwipeLeft()}
           onSwipeRight={() => onSwipeRight()}
           config={config}
-          style={styles.textView}
-        >
+          style={styles.textView}>
           {/**  <BluetoothText isStimStarted={stimStarted} textIndex={bleTextIndex} />  */}
           <CountdownCircleTimer
             isPlaying
             duration={70}
             colors={['#004777', '#F7B801', '#A30000', '#A30000']}
-            colorsTime={[70, 50, 20, 0]}
-          >
-            {({ remainingTime }) => <Text>{remainingTime}</Text>}
+            colorsTime={[70, 50, 20, 0]}>
+            {({remainingTime}) => <Text>{remainingTime}</Text>}
           </CountdownCircleTimer>
         </GestureRecognizer>
 

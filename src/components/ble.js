@@ -1,6 +1,6 @@
-import { Buffer } from 'buffer';
-import { BleManager } from 'react-native-ble-plx';
-import { CONFIG } from '../data/config';
+import {Buffer} from 'buffer';
+import {BleManager} from 'react-native-ble-plx';
+import {CONFIG} from '../data/config';
 
 export default class MyBleManager {
   static instance =
@@ -78,6 +78,7 @@ export default class MyBleManager {
 
             try {
               device.discoverAllServicesAndCharacteristics().then(() => {
+                console.info('connectDevice');
                 console.info('Connected to: ' + device.name);
                 console.info('At address: ' + device.id);
 
@@ -103,7 +104,7 @@ export default class MyBleManager {
               }, this.connTryInterval);
             }
           })
-          .catch((connectError) => {
+          .catch(connectError => {
             console.info('Ble Lib Conn Fail: ' + connectError);
             this.stopSearch();
             setTimeout(() => {
@@ -140,6 +141,7 @@ export default class MyBleManager {
 
             try {
               device.discoverAllServicesAndCharacteristics().then(() => {
+                console.info('connectSelectedDevice');
                 console.info('Connected to: ' + device.name);
                 console.info('At address: ' + device.id);
 
@@ -165,7 +167,7 @@ export default class MyBleManager {
               }, this.connTryInterval);
             }
           })
-          .catch((connectError) => {
+          .catch(connectError => {
             console.info('Ble Lib Conn Fail: ' + connectError);
             this.stopSearch();
             setTimeout(() => {
@@ -179,7 +181,7 @@ export default class MyBleManager {
   searchDevices() {
     this.cleanUp();
     console.info('Searching Devices');
-    console.info(CONFIG.deviceList[0]["data"]);
+    console.info(CONFIG.deviceList[0]['data']);
     if (this.isSearching) {
       return;
     }
@@ -187,20 +189,26 @@ export default class MyBleManager {
     this.isSearching = true;
     this.manager.startDeviceScan(null, null, (error, device) => {
       if (error) {
-        console.log('Scan Error: ' + JSON.stringify(error))
+        console.info('Scan Error: ' + error);
         return;
       }
-      if (device.name && device.name.includes('Vagustim') && !CONFIG.deviceList[0]["data"].find(element => element.name === device.name)) {
+      if (
+        device.name &&
+        device.name.includes('Vagustim') &&
+        !CONFIG.deviceList[0]['data'].find(
+          element => element.name === device.name,
+        )
+      ) {
         //this.stopSearch();
         console.info(device.name);
         console.info('Found Vagustim');
-        CONFIG.deviceList[0]["data"].push({ name: device.name });
+        CONFIG.deviceList[0]['data'].push({name: device.name});
         console.info(CONFIG.deviceList);
       }
     });
 
     setTimeout(() => {
-      console.info("Stop device scan");
+      console.info('Stop device scan');
       this.manager.stopDeviceScan();
       this.isSearchedForResearchers = true;
     }, 5000);

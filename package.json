@@ -30,6 +30,7 @@
     "react-native-countdown-circle-timer": "^3.0.9",
     "react-native-dropdown-picker": "^5.4.2",
     "react-native-fast-image": "^8.5.11",
+    "react-native-fs": "^2.20.0",
     "react-native-gesture-handler": "^2.4.2",
     "react-native-password-eye": "^1.0.5",
     "react-native-progress": "^5.0.0",

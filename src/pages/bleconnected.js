@@ -12,7 +12,7 @@ import { COLORS } from '../style/colors';
 import { DEFAULT_FONT } from '../style/fonts';
 import { getString } from '../data/strings';
 
-const BleConnected = ({ navigation, route }) => {
+const BleConnected = ({ navigation }) => {
   const [isStimStarted, setStimStarted] = useState(CONFIG.stimInProgress);
 
   const bleInstance = MyBleManager.instance;
@@ -26,9 +26,7 @@ const BleConnected = ({ navigation, route }) => {
 
   const startHandler = () => {
     if (bleInstance.isConnected) {
-      navigation.navigate('BleControl', {
-        selectedDeviceName: route.params.selectedDeviceName
-      });
+      navigation.navigate('SelectMeasurement');
     } else {
       navigation.navigate('BleSearch');
     }
