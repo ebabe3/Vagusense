@@ -1,18 +1,7 @@
 import React, {useState, useEffect, useMemo} from 'react';
-import {
-  View,
-  StyleSheet,
-  AppState,
-  TouchableOpacity,
-  Text,
-  ActivityIndicator,
-  Dimensions,
-  ScrollView,
-} from 'react-native';
+import {StyleSheet, AppState, Text, ScrollView, View} from 'react-native';
 
-import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
-
-import {Container, Content, Icon} from 'native-base';
+import {Container, Content} from 'native-base';
 
 import {Buffer} from 'buffer';
 
@@ -25,8 +14,11 @@ import {CONFIG} from '../../../data/config';
 
 import AwesomeAlert from 'react-native-awesome-alerts';
 import {useLiveChart} from '../../../components/useLiveChart.js';
+import CommonButton from '../../../components/commonbutton.js';
 
 const LiveMeasurement = ({navigation, route}) => {
+  const [loopCount, setLoopCount] = useState(0);
+
   const [stimStarted, setStimStarted] = useState(false);
   const [leftProgress, setLeftProgress] = useState(0);
   const [rightProgress, setRightProgress] = useState(0);
@@ -47,6 +39,8 @@ const LiveMeasurement = ({navigation, route}) => {
   const [skinResponseDataSource, setSkinResponseDataSource] = useState([0]);
 
   const [isDataSaved, setIsDataSaved] = useState(false);
+
+  const [isFinished, setIsFinished] = useState(false);
 
   const bleInstance = MyBleManager.instance;
 
@@ -220,6 +214,88 @@ const LiveMeasurement = ({navigation, route}) => {
       });
   };
 
+  const finishMeasurement = () => {
+    fetch(CONFIG.baseServer + 'api/ppgs/', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + CONFIG.token,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        stimulationId: CONFIG.stimulationId,
+        ppg: ppgValue,
+        skinResponse: skinResponseValue,
+        isBefore: CONFIG.isBefore,
+      }),
+    })
+      .then(response => response.json())
+      .then(responseData => {
+        console.info(JSON.stringify(responseData, null, 2));
+        if (responseData.message === 'PPG created') {
+          console.info('PPG Added Successfully');
+          openAlert('Nabız verisi alındı');
+        } else {
+          openAlert(getString('unknownErrorOccured'));
+        }
+      })
+      .catch(error => {
+        setRequestActive(false);
+        openAlert(getString('checkNetwork'));
+      });
+  };
+
+  const ppgLogic = currentVal => {
+    let delimIndex = currentVal.indexOf('_');
+
+    let ppgCurrent = parseInt(currentVal.substr(0, delimIndex));
+    ppgValue.push(ppgCurrent);
+    setCurrentPpg(ppgCurrent);
+
+    currentVal = currentVal.substr(delimIndex + 1);
+    delimIndex = currentVal.indexOf('_');
+
+    let skinResponseCurrent = parseInt(currentVal.substr(1, delimIndex));
+    skinResponseValue.push(skinResponseCurrent);
+    setCurrentSkinResponse(skinResponseCurrent);
+
+    currentVal = currentVal.substr(delimIndex + 1);
+    delimIndex = currentVal.indexOf('_');
+
+    /*
+    console.info(
+      'PPG Current: ' + ppgCurrent,
+      ' \t SkinResponse Current : ' + skinResponseCurrent,
+      ' \t current Val : ' + ppgValue.length,
+    );
+    */
+    if (ppgValue.length > 749 && ppgValue.length == 750 + i) {
+      i += 125;
+      sentData(ppgValue.slice(i, 750 + i), skinResponseValue.slice(i, 750 + i));
+    }
+  };
+
+  const ppgLoop = currentVal => {
+    //console.log(isFinished);
+    if (isFinished) {
+      finishMeasurement();
+    } else {
+      //console.log(loopCount);
+      ppgLogic(currentVal);
+      setLoopCount(prev => {
+        const newCount = prev + 1;
+        return newCount;
+      });
+    }
+  };
+
+  const handleStopButtonClick = () => {
+    console.log('Stop clicked');
+    setIsFinished(true);
+    console.log(isFinished);
+    finishMeasurement();
+  };
+
   let i = 0;
   const setupNotifications = () => {
     if (bleInstance.connectedDevice !== null) {
@@ -237,76 +313,7 @@ const LiveMeasurement = ({navigation, route}) => {
               bleInstance.connectedDevice.localName ===
               route.params.selectedDeviceName
             ) {
-              if (ppgValue.length < 3000) {
-                let delimIndex = currentVal.indexOf('_');
-
-                let ppgCurrent = parseInt(currentVal.substr(0, delimIndex));
-                ppgValue.push(ppgCurrent);
-                setCurrentPpg(ppgCurrent);
-
-                currentVal = currentVal.substr(delimIndex + 1);
-                delimIndex = currentVal.indexOf('_');
-
-                let skinResponseCurrent = parseInt(
-                  currentVal.substr(1, delimIndex),
-                );
-                skinResponseValue.push(skinResponseCurrent);
-                setCurrentSkinResponse(skinResponseCurrent);
-
-                currentVal = currentVal.substr(delimIndex + 1);
-                delimIndex = currentVal.indexOf('_');
-
-                /*console.info(
-                                    'PPG Current: ' + ppgCurrent,
-                                    ' \t SkinResponse Current : ' + skinResponseCurrent,
-                                    ' \t current Val : ' + ppgValue.length,
-                                );*/
-                if (ppgValue.length > 749) {
-                  if (ppgValue.length == 750 + i) {
-                    i += 125;
-                    sentData(
-                      ppgValue.slice(i, 750 + i),
-                      skinResponseValue.slice(i, 750 + i),
-                    );
-                  }
-                }
-              } else {
-                if (ppgValue.length === 3000) {
-                  ppgValue.push(0);
-                  console.info(
-                    'stimulationId: ' + CONFIG.stimulationId
-                  );
-                  setIsDataSaved(true);
-                  fetch(CONFIG.baseServer + 'api/ppgs/', {
-                    method: 'POST',
-                    headers: {
-                      Accept: 'application/json',
-                      Authorization: 'Bearer ' + CONFIG.token,
-                      'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                      stimulationId: CONFIG.stimulationId,
-                      ppg: ppgValue,
-                      skinResponse: skinResponseValue,
-                      isBefore: CONFIG.isBefore,
-                    }),
-                  })
-                    .then(response => response.json())
-                    .then(responseData => {
-                      console.info(JSON.stringify(responseData, null, 2));
-                      if (responseData.message === 'PPG created') {
-                        console.info('PPG Added Successfully');
-                        openAlert('Nabız verisi alındı');
-                      } else {
-                        openAlert(getString('unknownErrorOccured'));
-                      }
-                    })
-                    .catch(error => {
-                      setRequestActive(false);
-                      openAlert(getString('checkNetwork'));
-                    });
-                }
-              }
+              ppgLoop(currentVal);
             }
           }
         },
@@ -333,6 +340,22 @@ const LiveMeasurement = ({navigation, route}) => {
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
           style={styles.scrollViewStyle}>
+          <View
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <CommonButton
+              text={'Bitir'}
+              onPress={() => {
+                handleStopButtonClick();
+              }}
+              buttonColor={COLORS.buttonBlue}
+              buttonWidth={'50%'}
+              buttonMarginTop={54}
+            />
+          </View>
           <Text>HR</Text>
           {HrChart}
           <Text>rMSSD</Text>
@@ -361,7 +384,7 @@ const LiveMeasurement = ({navigation, route}) => {
             //hideAlert();
           }}
           onConfirmPressed={() => {
-            navigation.navigate('Login');
+            //navigation.navigate('Login');
           }}
           onDismiss={() => {
             //hideAlert();
