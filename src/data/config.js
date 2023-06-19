@@ -1,7 +1,7 @@
 export var CONFIG = {
   appVersion: '0.3.0',
   languageKey: 'lang',
-  baseServer: 'https://cytokine.v-coverhealth.com/',
+  baseServer: 'https://cytokine.vagustim.io/',
   //baseServer: 'https://stage.vagustim.io/api/2.0/',
   otaServer: 'http://production-env.eba-p4pi9fbu.eu-west-1.elasticbeanstalk.com/api/2.0/firmware/',
   //otaServer: 'http://143.198.148.246:9393/api/2.0/firmware/',

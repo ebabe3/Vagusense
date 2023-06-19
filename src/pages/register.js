@@ -130,7 +130,7 @@ const Register = ({ navigation }) => {
 
   const sendRegisterRequest = () => {
     setRequestActive(true);
-    fetch(CONFIG.baseServer + 'api/2.0/users/register', {
+    fetch(CONFIG.baseServer + 'api/users/register', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -150,7 +150,7 @@ const Register = ({ navigation }) => {
       .then((responseData) => {
         setRequestActive(false);
         console.info(JSON.stringify(responseData, null, 2));
-        if (responseData.message === 'Registration successful') {
+        if (responseData.message === 'Registration success') {
           navigation.navigate('CheckEmail', { isReset: false });
         } else if (responseData.status === 400) {
           console.info(responseData.validationErrors);
@@ -162,6 +162,7 @@ const Register = ({ navigation }) => {
         }
       })
       .catch((error) => {
+        console.error(error);
         setRequestActive(false);
         Alert.alert(getString('checkNetwork'));
       });
